@@ -1,0 +1,43 @@
+﻿
+<div style="height:50px;margin-top:70px;">
+    <h2 id="title" style="text-align:center;"></h2>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { @Id = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="row options">
+            <label for="length"> Length: </label>
+            <input type="range" name="length" id="length" min="6" max="20" value="8" oninput="OutputLength.value = length.value" />
+            <output id="OutputLength">8</output>
+        </div>
+        <div class="row options">
+            <label for="numbers"> Accept numbers: </label>
+            <input type="checkbox" name="numbers" id="numbers" checked="checked" />
+        </div>
+        <div class="row options">
+            <label for="special"> Accept special characters: </label>
+            <input type="checkbox" name="special" id="special" />
+        </div>
+        <div class="row options">
+            <label> letters options: </label>
+            <select id="letters">
+                <option value="1">capital letters</option>
+                <option value="2">lowercase</option>
+                <option value="3">Both</option>
+            </select>
+        </div>
+        <div class="row" style="transform: translateX(25%);">
+            <input type="submit" value="Generate" />
+        </div>
+
+        <div id="result"> </div>
+}
+    </div>
+</div>

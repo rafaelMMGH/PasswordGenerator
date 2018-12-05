@@ -1,0 +1,52 @@
+﻿*{
+    color: #fff;
+}
+body {
+    background: #000000; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #434343, #000000); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-family: 'Cutive Mono', monospace;
+}
+
+h2 {
+    font-family: 'Russo One', sans-serif;
+}
+
+#result {
+    margin-top:3vw;
+    font-size:21px;
+    font-family: 'Space Mono', monospace;
+}
+
+#form{
+    margin-top: 4vw;
+    margin-left:3.5vw;
+}
+
+.options {
+    margin-bottom: 1.2vw;
+}
+
+input[type="submit"] {
+    margin-top:2.7vw;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    box-sizing: content-box;
+    background-color: #f83600;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 11px 23px;
+    border-radius: 30px;
+    outline: 0 !important;
+    border: 0;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover{
+    opacity:.9;
+}
