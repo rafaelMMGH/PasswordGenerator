@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Cutive+Mono|Montserrat|Russo+One|Space+Mono" rel="stylesheet">
+        <!-- Styles -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
+        <style>
+            *{
+                color: #fff;
+            }
+            body {
+                background: #000000; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #434343, #000000); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                font-family: 'Cutive Mono', monospace;
+            }
+
+            h2 {
+                font-family: 'Russo One', sans-serif;
+            }
+
+            #result {
+                margin-top:3vw;
+                font-size:21px;
+                font-family: 'Space Mono', monospace;
+            }
+
+            #form{
+                margin-top: 4vw;
+                margin-left:3.5vw;
+            }
+
+            .options {
+                margin-bottom: 1.2vw;
+            }
+
+            input[type="submit"] {
+                margin-top:2.7vw;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                display: inline-block;
+                box-sizing: content-box;
+                background-color: #f83600;
+                color: #fff;
+                font-weight: 700;
+                font-size: 12px;
+                text-transform: capitalize;
+                text-decoration: none;
+                padding: 11px 23px;
+                border-radius: 30px;
+                outline: 0 !important;
+                border: 0;
+                transition: all .2s ease-in-out;
+                cursor: pointer;
+            }
+
+            input[type="submit"]:hover{
+                opacity:.9;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div style="height:50px;margin-top:70px;">
+                <h2 id="title" style="text-align:center;"></h2>
+            </div>
+            <div class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4">
+                    <form method="POST" id="form" >
+                        <div class="row options">
+                            <label for="length"> Length: </label>
+                            <input type="range" name="length" id="length" min="6" max="20" value="8" oninput="OutputLength.value = length.value" />
+                            <output id="OutputLength">8</output>
+                        </div>
+                        <div class="row options">
+                            <label for="numbers"> Accept numbers: </label>
+                            <input type="checkbox" name="numbers" id="numbers" checked="checked" />
+                        </div>
+                        <div class="row options">
+                            <label for="special"> Accept special characters: </label>
+                            <input type="checkbox" name="special" id="special" />
+                        </div>
+                        <div class="row options">
+                            <label> letters options: </label>
+                            <select id="letters">
+                                <option value="1">capital letters</option>
+                                <option value="2">lowercase</option>
+                                <option value="3">Both</option>
+                            </select>
+                        </div>
+                        <div class="row" style="transform: translateX(25%);">
+                            <input type="submit" value="Generate" />
+                        </div>
+                    </form>
+                    <div id="result"> </div>
+                </div>
+            </div>
+
+        </div> 
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
+        <script>
+        $(document).ready(function(){
+
+            var typed = new Typed('#title', {
+                strings: ['','<strong>Simple Password Generator</strong>'],
+                typeSpeed: 50,
+                backSpeed: 50,
+                loop: true,
+                smartBackspace: true
+            });
+
+            function createPassword(){
+                    var Length = $("#length").val();
+                    var Numbers = $("#numbers").is(":checked");
+                    var Letters = $("#letters").val();
+                    var Special = $("#special").is(":checked");
+
+                    var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    var numbers = "0123456789";
+                    var special = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+                    var chars = "";
+                    var text ="";
+
+                    if (Numbers)
+                        chars += numbers;
+                    if (Special)
+                        chars += special;
+
+                    chars += Letters == 1 ? letters : Letters == 2 ? letters.toLowerCase() : letters + letters.toLowerCase();
+
+                    for (var i = 0; i < Length; i++)
+                        text += chars.charAt(Math.floor(Math.random() * chars.length));
+                    
+
+                return text;
+            }
+
+            $("#form").on("submit",function(e){
+                e.preventDefault();
+
+                axios.post("/Home/GeneratePassword/", {
+                    Length: $("#length").val(),
+                    Numbers: $("#numbers").is(":checked"),
+                    Letters: $("#letters").val(),
+                    Special: $("#special").is(":checked")
+                }).then(function(e){
+                    $("#result").html("Password: <strong>" + e.data + "</strong>");
+                }).catch(function(e){
+                    console.log(e)
+                    var result = createPassword();
+                    $("#result").html("Password: <strong>" + result + "</strong>");
+                })
+
+            });
+
+        });
+        </script>
+    </body>
+</html>
