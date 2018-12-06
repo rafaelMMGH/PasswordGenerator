@@ -97,7 +97,7 @@
                             <input type="submit" value="Generate" />
                         </div>
                     </form>
-                    <xmp id="result"> </xmp>
+                    <xmp id="result" style="font-weight:bold" > </xmp>
                 </div>
             </div>
 
@@ -157,7 +157,7 @@
                 }).catch(function(e){
                     console.log(e)
                     var result = createPassword();
-                    $("#result").html("Password: <strong>" + result + "</strong>");
+                    $("#result").html("Password: " + result );
                 })
 
             });
